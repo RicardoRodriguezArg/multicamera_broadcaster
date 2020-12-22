@@ -1,0 +1,1 @@
+sudo docker build -t multicamera_broadcaster/raspi_system:0.1 .
