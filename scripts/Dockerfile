@@ -14,6 +14,7 @@ RUN apt-get install libgtk-3-dev -y
 RUN apt-get install libcanberra-gtk* -y
 RUN apt-get install libatlas-base-dev gfortran -y
 RUN apt-get install python3-dev -y
+RUN apt-get -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python3 get-pip.py
 RUN pip install numpy
@@ -35,15 +36,15 @@ RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip
 RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip
 RUN unzip opencv.zip && mv opencv-4.0.0 opencv
 RUN unzip opencv_contrib.zip && mv opencv_contrib-4.0.0 opencv_contrib
-
+#RUN apt-get install libavresample -y
 RUN cd opencv && mkdir build&& cd build && cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-    -D ENABLE_NEON=ON \
-    -D ENABLE_VFPV3=ON \
+    -D ENABLE_NEON=OFF \
+    -D ENABLE_VFPV3=OFF \
     -D BUILD_TESTS=OFF \
     -D OPENCV_ENABLE_NONFREE=ON \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
-    -D BUILD_EXAMPLES=OFF ..  && make -j 4 && make install && ldconfig
+    -D BUILD_EXAMPLES=OFF ..  && make && make install && ldconfig
 
  
