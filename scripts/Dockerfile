@@ -18,7 +18,7 @@ RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python3 get-pip.py
 RUN pip install numpy
 #install Gtest/GMock/Gflags
-RUN apt-get install libgflags-dev -y
+RUN apt-get install git libgflags-dev -y
 WORKDIR /home/Documents
 #Install Glog
 WORKDIR /home/Documents
@@ -46,4 +46,4 @@ RUN cd opencv && mkdir build&& cd build && cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D BUILD_EXAMPLES=OFF ..  && make -j 4 && make install && ldconfig
 
-
+ 
