@@ -2,7 +2,7 @@ FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get build-essential checkinstall cmake pkg-config wget vim curl unzip -y
+RUN apt-get install build-essential checkinstall cmake pkg-config wget vim curl unzip -y
 RUN apt-get install qt5-default -y
 RUN apt-get install libprotobuf-dev protobuf-compiler -y
 
@@ -17,8 +17,18 @@ RUN apt-get install python3-dev -y
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python3 get-pip.py
 RUN pip install numpy
-
+#install Gtest/GMock/Gflags
 RUN apt-get install libgflags-dev -y
+WORKDIR /home/Documents
+#Install Glog
+WORKDIR /home/Documents
+RUN git clone https://github.com/google/glog.git
+RUN cd glog && mkdir -p build && cd build && cmake .. -Bbuild -G "Unix Makefiles" && cmake --build build && cmake --build build --target install && ldconfig
+#Installing GTest & GMock
+WORKDIR /home/Documents
+RUN git clone https://github.com/google/googletest.git
+RUN cd googletest && mkdir build && cd build && cmake .. && make -j 4 && make install && ldconfig
+
 #Download and build opencv
 WORKDIR /home/Documents
 RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip
@@ -36,12 +46,4 @@ RUN cd opencv && mkdir build&& cd build && cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D BUILD_EXAMPLES=OFF ..  && make -j 4 && make install && ldconfig
 
-WORKDIR /home/Documents
-#Install Glog
-WORKDIR /home/Documents
-RUN git clone https://github.com/google/glog.git
-RUN cd glog && mkdir -p build && cd build && cmake .. -Bbuild -G "Unix Makefiles" && cmake --build build && cmake --build build --target install && ldconfig
-#Installing GTest & GMock
-WORKDIR /home/Documents
-RUN git clone https://github.com/google/googletest.git
-RUN cd googletest && mkdir build && cd build && cmake .. && make -j 4 && make install && ldconfig
+
