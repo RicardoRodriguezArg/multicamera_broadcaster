@@ -14,7 +14,9 @@ RUN apt-get install libgtk-3-dev -y
 RUN apt-get install libcanberra-gtk* -y
 RUN apt-get install libatlas-base-dev gfortran -y
 RUN apt-get install python3-dev -y
-RUN apt-get -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
+RUN apt-get -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen netcat# net-tools
+#Raspi cam drivers
+RUN apt-get install autoconf gettext libtool libjpeg62-dev -y
 RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python3 get-pip.py
 RUN pip install numpy

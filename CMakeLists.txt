@@ -1,6 +1,11 @@
 cmake_minimum_required(3.0)
 project(Communications)
 include(GNUInstallDirs)
+#Build Type
+IF(NOT CMAKE_BUILD_TYPE )
+   SET( CMAKE_BUILD_TYPE "Release" )
+ENDIF()
+
 add_definitions(-Wall -Wextra -pedantic)
 include (cmake/GMockConfig.cmake)
 find_package(GTest REQUIRED)
