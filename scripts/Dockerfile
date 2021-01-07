@@ -35,9 +35,11 @@ RUN cd googletest && mkdir build && cd build && cmake .. && make -j 4 && make in
 #Download and build opencv
 WORKDIR /home/Documents
 RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.0.0.zip
-RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip
-RUN unzip opencv.zip && mv opencv-4.0.0 opencv
-RUN unzip opencv_contrib.zip && mv opencv_contrib-4.0.0 opencv_contrib
+RUN git clone https://github.com/opencv/opencv.git && cd opencv && git checkout 4.5.1
+RUN git clone https://github.com/opencv/opencv_contrib.git && cd opencv_contrib && git checkout 4.5.1
+#RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.0.0.zip
+#RUN unzip opencv.zip && mv opencv-4.0.0 opencv
+#RUN unzip opencv_contrib.zip && mv opencv_contrib-4.0.0 opencv_contrib
 #RUN apt-get install libavresample -y
 RUN cd opencv && mkdir build&& cd build && cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
