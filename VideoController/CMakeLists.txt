@@ -9,7 +9,7 @@ set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
 #Add Dependencies
 #####################################
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../cmake")
-find_package(raspicam REQUIRED)
+
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 find_package(glog REQUIRED)
@@ -27,4 +27,4 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # Link
-target_link_libraries( ${PROJECT_NAME} PUBLIC ${OpenCV_LIBS} glog::glog ${raspicam_CV_LIBS} ${raspicam_LIBS} -lmmal -lmmal_core -lmmal_util)
+target_link_libraries( ${PROJECT_NAME} PUBLIC ${OpenCV_LIBS} glog::glog)
