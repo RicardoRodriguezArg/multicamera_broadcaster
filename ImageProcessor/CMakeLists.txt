@@ -8,15 +8,15 @@ file(GLOB HDRS "./include/ImageProcessor/*.h")
 set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
 #Add Dependencies
 #####################################
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../cmake")
+
 
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 find_package(glog REQUIRED)
 find_package(gflags REQUIRED)
 
-add_executable(${PROJECT_NAME} ${SRCS} ${HDRS})
-add_executable(MCB::IMAGE_PROCESSOR_LIB ALIAS ${PROJECT_NAME})
+add_library(${PROJECT_NAME} ${SRCS} ${HDRS})
+add_library(MCB::IMAGE_PROCESSOR_LIB ALIAS ${PROJECT_NAME})
 #INCLUDE_DIR for our target
 target_include_directories(${PROJECT_NAME}
     PUBLIC 
@@ -26,5 +26,32 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Link
-target_link_libraries( ${PROJECT_NAME} PUBLIC ${OpenCV_LIBS} glog::glog)
+target_compile_options(${PROJECT_NAME} PRIVATE -Werror -Wpedantic )
+
+# model dependencies
+#this target will export the following dependencies
+target_link_libraries( ${PROJECT_NAME} PUBLIC 
+                                              ${OpenCV_LIBS}
+                                              ${CMAKE_THREAD_LIBS_INIT}
+                                              ${GLOG_LIBRARIES} glog::glog
+                                              ${GFLAGS_LIBRARIES}
+                      )
+#export our target
+include(GNUInstallDirs)
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}-export    #export -> ImageProcessor-export
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+#install the exported target
+install(EXPORT ${PROJECT_NAME}-targets
+  FILE
+    ${PROJECT_NAME}Targets.cmake
+  NAMESPACE
+    MCB::IMAGE_PROCESSOR_LIB::
+  DESTINATION
+    ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+
+

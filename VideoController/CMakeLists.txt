@@ -8,7 +8,6 @@ file(GLOB HDRS "./include/VideoController/*.h")
 set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
 #Add Dependencies
 #####################################
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../cmake")
 
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)

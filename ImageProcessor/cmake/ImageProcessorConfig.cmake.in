@@ -1,0 +1,20 @@
+get_filename_component(ImageProcessor_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(CMakeFindDependencyMacro)
+
+list(APPEND CMAKE_MODULE_PATH ${ImageProcessor_CMAKE_DIR})
+
+#find_dependency(RapidJSON @MIN_LIB_VERSION@)
+#OpenCV 
+#Threads
+#glog
+#gflags
+
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
+
+
+
+if(NOT TARGET MCB::IMAGE_PROCESSOR_LIB)
+    include("${ImageProcessor_CMAKE_DIR}/ImageProcessorTargets.cmake")
+endif()
+
+set(IMAGEPROCESSOR_lIBRARIES TARGET MCB::IMAGE_PROCESSOR_LIB)
