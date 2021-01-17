@@ -14,7 +14,7 @@ list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 
 if(NOT TARGET MCB::IMAGE_PROCESSOR_LIB)
-    include("${ImageProcessor_CMAKE_DIR}/ImageProcessorTargets.cmake")
+    include("${ImageProcessor_CMAKE_DIR}/ImageProcessor-Targets.cmake")
 endif()
 
 set(IMAGEPROCESSOR_lIBRARIES TARGET MCB::IMAGE_PROCESSOR_LIB)

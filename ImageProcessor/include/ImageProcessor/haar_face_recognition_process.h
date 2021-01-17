@@ -3,11 +3,8 @@
 #include <algorithm>
 #include <vector>
 #include <exception>
-#include "image_processor_interface.h"
-#include "opencv2/objdetect.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/videoio.hpp"
+#include <ImageProcessor/image_processor_interface.h>
+
 
 namespace Multicamera {
 namespace FaceRecognition{

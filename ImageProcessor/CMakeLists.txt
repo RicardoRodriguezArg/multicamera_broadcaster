@@ -37,16 +37,20 @@ target_link_libraries( ${PROJECT_NAME} PUBLIC
                                               ${GFLAGS_LIBRARIES}
                       )
 #export our target
+
+#set install dir variable
+
+
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}-export    #export -> ImageProcessor-export
+    EXPORT ${PROJECT_NAME}-targets    #export -> ImageProcessor-export
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 #install the exported target
 install(EXPORT ${PROJECT_NAME}-targets
   FILE
-    ${PROJECT_NAME}Targets.cmake
+    ${PROJECT_NAME}-targets.cmake
   NAMESPACE
     MCB::IMAGE_PROCESSOR_LIB::
   DESTINATION
