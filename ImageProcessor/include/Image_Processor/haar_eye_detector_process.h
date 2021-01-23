@@ -2,7 +2,7 @@
 #define _HAAR_EYES_RECOGNITION_PROCESS__H__
 #include <algorithm>
 #include <vector>
-#include <ImageProcessor/image_processor_interface.h>
+#include "image_processor_interface.h"
 
 namespace Multicamera {
 namespace FaceRecognition{

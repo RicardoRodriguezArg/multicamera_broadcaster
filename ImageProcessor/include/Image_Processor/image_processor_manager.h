@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 #include <type_traits>
-#include <ImageProcessor/image_processor_interface.h>
+#include "image_processor_interface.h"
 
 namespace Multicamera {
 namespace ImageProcessor{

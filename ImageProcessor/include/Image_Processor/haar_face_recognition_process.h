@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <exception>
-#include <ImageProcessor/image_processor_interface.h>
+#include "image_processor_interface.h"
 
 
 namespace Multicamera {

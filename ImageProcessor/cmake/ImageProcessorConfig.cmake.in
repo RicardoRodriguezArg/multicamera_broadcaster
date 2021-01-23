@@ -1,7 +1,7 @@
-get_filename_component(ImageProcessor_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(IMAGEPROCESSOR_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 include(CMakeFindDependencyMacro)
 
-list(APPEND CMAKE_MODULE_PATH ${ImageProcessor_CMAKE_DIR})
+list(APPEND CMAKE_MODULE_PATH ${IMAGEPROCESSOR_CMAKE_DIR})
 
 #find_dependency(RapidJSON @MIN_LIB_VERSION@)
 #OpenCV 
@@ -9,12 +9,13 @@ list(APPEND CMAKE_MODULE_PATH ${ImageProcessor_CMAKE_DIR})
 #glog
 #gflags
 
-list(REMOVE_AT CMAKE_MODULE_PATH -1)
+#list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 
 
-if(NOT TARGET MCB::IMAGE_PROCESSOR_LIB)
-    include("${ImageProcessor_CMAKE_DIR}/ImageProcessor-Targets.cmake")
+if(NOT TARGET IMAGE_PROCESSOR_LIB::ImageProcessor)
+    message(STATUS "Install Configuration Script----->: ${IMAGEPROCESSOR_CMAKE_DIR}")
+    include("${IMAGEPROCESSOR_CMAKE_DIR}/ImageProcessorTargets.cmake")
 endif()
 
-set(IMAGEPROCESSOR_lIBRARIES TARGET MCB::IMAGE_PROCESSOR_LIB)
+set(IMAGEPROCESSOR_lIBRARIES TARGET IMAGE_PROCESSOR_LIB::ImageProcessor)
