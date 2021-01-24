@@ -23,8 +23,10 @@ add_executable(${PROJECT_NAME}_bin ${SRCS} ${HDRS} src/main.cpp)
 add_library(IMAGE_PROCESSOR_LIB ALIAS ${PROJECT_NAME})
 #INCLUDE_DIR for our target
 #extrange need to add this explicity for Raspy
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
-${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
+		    ${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
+		    ${OpenCV_INCLUDE_DIRS}
 )
 target_include_directories(${PROJECT_NAME}
     PUBLIC 
@@ -45,7 +47,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wpedantic )
 target_link_libraries( ${PROJECT_NAME} PUBLIC 
                                               ${OpenCV_LIBS}
                                               ${CMAKE_THREAD_LIBS_INIT}
-                                              ${GLOG_LIBRARIES} glog::glog
+                                              ${GLOG_LIBRARIES}
+                                              glog::glog
                                               ${GFLAGS_LIBRARIES}
                       )
 #export our target

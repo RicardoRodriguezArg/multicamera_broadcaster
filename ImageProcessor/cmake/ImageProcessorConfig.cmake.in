@@ -4,6 +4,7 @@ include(CMakeFindDependencyMacro)
 list(APPEND CMAKE_MODULE_PATH ${IMAGEPROCESSOR_CMAKE_DIR})
 
 #find_dependency(RapidJSON @MIN_LIB_VERSION@)
+find_dependency(OpenCV )
 #OpenCV 
 #Threads
 #glog
