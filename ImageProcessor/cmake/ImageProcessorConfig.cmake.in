@@ -12,7 +12,9 @@ find_dependency(OpenCV )
 
 #list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
-
+set (ImageProcessor_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
+    )
 
 if(NOT TARGET IMAGE_PROCESSOR_LIB::ImageProcessor)
     message(STATUS "Install Configuration Script----->: ${IMAGEPROCESSOR_CMAKE_DIR}")

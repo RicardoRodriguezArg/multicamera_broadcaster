@@ -8,7 +8,7 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 file(GLOB SRCS "src/*.h")
 file(GLOB HDRS "include/Image_Processor/*.h")
 #Clang Tidy checks
-#set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
+set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-header-filter=.*)
 #Add Dependencies
 #####################################
 
@@ -24,13 +24,15 @@ add_library(IMAGE_PROCESSOR_LIB ALIAS ${PROJECT_NAME})
 #INCLUDE_DIR for our target
 #extrange need to add this explicity for Raspy
 
+    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
 		    ${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
 		    ${OpenCV_INCLUDE_DIRS}
 )
 target_include_directories(${PROJECT_NAME}
     PUBLIC 
-        $<INSTALL_INTERFACE:include>#for interface    
+        $<INSTALL_INTERFACE:include>#for interface
+        $<INSTALL_INTERFACE:include/Image_Processor>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>#for building
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
@@ -116,7 +118,7 @@ export(PACKAGE ImageProcessor)
 
 #############################################
 ## Add test
-#enable_testing()
-#add_subdirectory(test)
+enable_testing()
+add_subdirectory(test)
 
 
