@@ -13,6 +13,8 @@ set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-header-filter=.*)
 #####################################
 
 
+
+
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 find_package(glog REQUIRED)
@@ -21,6 +23,8 @@ find_package(gflags REQUIRED)
 add_library(${PROJECT_NAME} ${SRCS} ${HDRS})
 add_executable(${PROJECT_NAME}_bin ${SRCS} ${HDRS} src/main.cpp)
 add_library(IMAGE_PROCESSOR_LIB ALIAS ${PROJECT_NAME})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/resources)
+
 #INCLUDE_DIR for our target
 #extrange need to add this explicity for Raspy
 
@@ -113,10 +117,14 @@ export(EXPORT ${PROJECT_NAME}-targets
     FILE ${CMAKE_CURRENT_BINARY_DIR}/ImageProcessorTargets.cmake
     NAMESPACE IMAGE_PROCESSOR_LIB::)
 
-#Register package in user's package registry
-export(PACKAGE ImageProcessor)
 
 #############################################
+#Copy Resources files for testing
+
+
+#############################################
+#Register package in user's package registry
+export(PACKAGE ImageProcessor)
 ## Add test
 enable_testing()
 add_subdirectory(test)
