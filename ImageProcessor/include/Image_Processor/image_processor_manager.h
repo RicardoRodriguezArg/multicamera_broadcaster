@@ -18,9 +18,27 @@ struct ImageProcessorManager {
   explicit ImageProcessorManager(std::string_view face_haar_input_file,
                                  std::string_view face_eyes_input_file)
       : face_cascade_(std::string(face_haar_input_file)),
-        eyes_cascade_(std::string(face_eyes_input_file)) {}
+        eyes_cascade_(std::string(face_eyes_input_file)) 
+        {
+        
+        }
+        
+ bool  CheckClassifiers() const noexcept
+ {
+ return (!face_cascade_.empty()) && (!eyes_cascade_.empty());
+ }
+ 
+  bool CheckFaceClasifier() const noexcept
+  {
+  return !face_cascade_.empty();
+  }
+  
+  bool CheckEyeClasifier() const noexcept
+  {
+  return !eyes_cascade_.empty();
+  }
 
-  void Detect(const cv::Mat &frame) {
+  bool Detect(const cv::Mat &frame) {
     faces_points_.clear();
     eyes_points_.clear();
     cv::Mat frame_gray;
@@ -40,6 +58,7 @@ struct ImageProcessorManager {
                              face.y + eye.y + eye.height / 2);
       }
     }
+    return (!faces_points_.empty()) && (!eyes_points_.empty());
   }
 
   cv::CascadeClassifier face_cascade_;

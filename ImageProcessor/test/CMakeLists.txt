@@ -3,12 +3,19 @@ find_package(GTest REQUIRED)
 
 find_package(ImageProcessor REQUIRED)#This brings the target
 message (STATUS "ImageProcessor Include Directories: ${ImageProcessor_DIR}")
-include_directories(${ImageProcessor_DIR} ${OpenCV_INCLUDE_DIRS})
+include_directories(${ImageProcessor_DIR} 
+                    ${OpenCV_INCLUDE_DIRS}
+                    ${GTEST_INCLUDE_DIR}
+)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/resources)
 
-# Now simply link against gtest as needed. Eg
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(image_processor_test gtest_main IMAGE_PROCESSOR_LIB::ImageProcessor)
+add_executable(${PROJECT_NAME} main.cpp face_recognition_tests.cpp)
+target_link_libraries(image_processor_test 
+			IMAGE_PROCESSOR_LIB::ImageProcessor
+			gtest
+			gtest_main
+			)
 
-add_test(NAME ImageProcessor_tests
-    COMMAND ImageProcessor_test)
+add_test(NAME ${PROJECT_NAME}
+    COMMAND ${PROJECT_NAME})

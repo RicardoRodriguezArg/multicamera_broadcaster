@@ -11,10 +11,6 @@ file(GLOB HDRS "include/Image_Processor/*.h")
 set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-header-filter=.*)
 #Add Dependencies
 #####################################
-
-
-
-
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 find_package(glog REQUIRED)
@@ -24,6 +20,8 @@ add_library(${PROJECT_NAME} ${SRCS} ${HDRS})
 add_executable(${PROJECT_NAME}_bin ${SRCS} ${HDRS} src/main.cpp)
 add_library(IMAGE_PROCESSOR_LIB ALIAS ${PROJECT_NAME})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/resources)
+#for testing
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/test/resources)
 
 #INCLUDE_DIR for our target
 #extrange need to add this explicity for Raspy
