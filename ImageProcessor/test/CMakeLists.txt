@@ -8,7 +8,7 @@ include_directories(${ImageProcessor_DIR}
                     ${GTEST_INCLUDE_DIR}
 )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/resources)
+
 
 add_executable(${PROJECT_NAME} main.cpp face_recognition_tests.cpp)
 target_link_libraries(image_processor_test 
@@ -16,6 +16,9 @@ target_link_libraries(image_processor_test
 			gtest
 			gtest_main
 			)
+
+message (STATUS "Copying images files to testing directory: ${CMAKE_BINARY_DIR}/test/images")
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/test/images)
 
 add_test(NAME ${PROJECT_NAME}
     COMMAND ${PROJECT_NAME})
