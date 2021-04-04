@@ -1,14 +1,13 @@
 cc_library(
-    name = "image_processor",
-    srcs = glob(["*.cpp"]) + glob(["*.cc"]),
-    hdrs = glob(["./include/Image_Processor/*.h"]) + glob(["./include/Image_Processor/*.hpp"]), 
-    deps = ["@eigen3//:eigen"],
+    name = "image_processor_lib",
+    hdrs = glob(["include/*.h", "include/*.hpp"]),
+    deps = ["@opencv//:opencv4"],
     visibility = ["//visibility:public"],
 )
 
 cc_binary(
-    name = "kalman_filter_bin",
-    srcs = glob(["*.cpp"]) + glob(["*.cc"]),
-    deps = [ ":kalman_filter",]
-
+name="image_processor_bin",
+srcs = glob(["src/*.cpp", "src/*.cc",]),
+deps = [":image_processor_lib"],
 )
+
