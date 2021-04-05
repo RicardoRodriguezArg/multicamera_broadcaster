@@ -13,3 +13,8 @@ new_local_repository(
     path = "/usr/local",
     build_file = "./ThirdParty/opencv.BUILD",
 )
+new_local_repository(
+    name = "cairo",
+    path = "usr/include/cairo",
+    build_file = "./ThirdParty/cairo.BUILD",
+)

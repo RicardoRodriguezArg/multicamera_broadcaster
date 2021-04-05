@@ -1,9 +1,0 @@
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/install/strip.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/install/local.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/install.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/list_install_components.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/rebuild_cache.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/edit_cache.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/test.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/imageProcessor_bin.dir
-/home/operador/Documents/multicamera_broadcaster/ImageProcessor/build/CMakeFiles/imageProcessor.dir
