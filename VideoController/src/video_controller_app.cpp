@@ -16,8 +16,9 @@ int main(int argc, char **argv) {
     double fps = cap.get(CAP_PROP_FPS);
     std::cout << "Frames per seconds : " << fps << endl;
     String window_name = "My First Video";
+    cv::Mat frame;
     while (true) {
-      Mat frame;
+
       bool bSuccess = cap.read(frame); // read a new frame from video
 
       // Breaking the while loop at the end of the video
@@ -27,7 +28,7 @@ int main(int argc, char **argv) {
       }
       // show the frame in the created window
       imshow(window_name, frame);
-
+      frame.release();
       // wait for for 10 ms until any key is pressed.
       // If the 'Esc' key is pressed, break the while loop.
       // If the any other key is pressed, continue the loop

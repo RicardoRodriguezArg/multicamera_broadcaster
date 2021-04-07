@@ -1,5 +1,5 @@
 
-#include <Image_Processor/image_processor_manager.h>
+#include "ImageProcessor/image_processor_manager.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char **argv) {

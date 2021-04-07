@@ -23,7 +23,7 @@ add_library(${PROJECT_NAME}Lib ${SRCS} ${HDRS})
 add_executable(${PROJECT_NAME}_bin ${SRCS} ${HDRS} src/main.cpp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
-		    ${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
+		    ${CMAKE_CURRENT_SOURCE_DIR}/include/ImageProcessor
 		    ${OpenCV_INCLUDE_DIRS}
 )
 
@@ -31,19 +31,14 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
 target_include_directories(${PROJECT_NAME}Lib
     PUBLIC 
         $<INSTALL_INTERFACE:include>#for interface
-        $<INSTALL_INTERFACE:include/Image_Processor>
+        $<INSTALL_INTERFACE:include/image_processor>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>#for building
     PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Image_Processor
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/image_processor
     ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/src
-
-        
 )
 
-
-
-# model dependencies
 #this target will export the following dependencies
 target_link_libraries( ${PROJECT_NAME}Lib PUBLIC 
                                               ${OpenCV_LIBS}
@@ -51,10 +46,8 @@ target_link_libraries( ${PROJECT_NAME}Lib PUBLIC
                                               ${GLOG_LIBRARIES}
                                               ${GFLAGS_LIBRARIES}
                       )
-                      
-target_compile_options(${PROJECT_NAME}Lib PRIVATE -Wall -Werror -Wpedantic -O3)
 
-target_compile_definitions(${PROJECT_NAME}Lib PRIVATE DEBUG=1 )
+target_compile_options(${PROJECT_NAME}Lib PRIVATE -Wall -Werror -Wpedantic -O3)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}/resources)
 #for testing
@@ -64,46 +57,59 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/ DESTINATION ${CMAKE_BINARY_DIR}
 
 #set install dir variable
 include(GNUInstallDirs)
-
-set (TARGET_EXPORT_CMAKE_FILENAME ${PROJECT_NAME}Targets)
-
-install(TARGETS ${PROJECT_NAME}Lib
-         EXPORT  ${TARGET_EXPORT_CMAKE_FILENAME}
-         LIBRARY DESTINATION lib/
-       )
-         
-install(EXPORT		${TARGET_EXPORT_CMAKE_FILENAME}
-        FILE   		${TARGET_EXPORT_CMAKE_FILENAME}.cmake
-        NAMESPACE	${PROJECT_NAME}::
-        DESTINATION	cmake/
-       )
-
-
 include(CMakePackageConfigHelpers)
+set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 
-set (CONFIG_INPUT ./cmake/${PROJECT_NAME}Config.cmake.in)
-set (CONFIG_FILE ${PROJECT_NAME}Config.cmake)
-set (VERSION_FILE ${PROJECT_NAME}Config.cmake)
+set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
-configure_package_config_file( ${CONFIG_INPUT}
-    ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE}
-    INSTALL_DESTINATION cmake/
-    PATH_VARS TARGET_EXPORT_CMAKE_FILENAME
-)
+# Configuration
+set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
+set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+set(namespace "${PROJECT_NAME}::")
+
 
 write_basic_package_version_file(
-	${CMAKE_CURRENT_BINARY_DIR}/${VERSION_FILE}
-	VERSION ${PACKAGE_VERSION}
-        COMPATIBILITY AnyNewerVersion
+    "${version_config}" COMPATIBILITY SameMajorVersion
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${VERSION_FILE}
-              ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_FILE}
-        DESTINATION cmake/
-        )
+configure_package_config_file(
+    "cmake/${PROJECT_NAME}Config.cmake.in"
+    "${project_config}"
+    INSTALL_DESTINATION "${config_install_dir}"
+)
 
+install(
+    TARGETS ${PROJECT_NAME}Lib
+    EXPORT "${TARGETS_EXPORT_NAME}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+)
+# Headers:
+#   * Source/foo/Bar.hpp -> <prefix>/include/foo/Bar.hpp
+#   * Source/foo/Baz.hpp -> <prefix>/include/foo/Baz.hpp
+install(
+    DIRECTORY "include/ImageProcessor"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(
+    FILES "${project_config}" "${version_config}"
+    DESTINATION "${config_install_dir}"
+)
+
+# Config
+#   * <prefix>/lib/cmake/Foo/FooTargets.cmake
+install(
+    EXPORT "${TARGETS_EXPORT_NAME}"
+    NAMESPACE "${namespace}"
+    DESTINATION "${config_install_dir}"
+)
 
 ## Add test
 enable_testing()
-#add_subdirectory(test)
+add_subdirectory(test)
 
 
