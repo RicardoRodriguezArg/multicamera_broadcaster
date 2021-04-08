@@ -22,6 +22,7 @@ find_package(gflags REQUIRED)
 find_package(glog REQUIRED)
 add_library(glog INTERFACE IMPORTED)
 
-enable_testing()
-add_subdirectory(Commnunications)
+add_subdirectory(ImageProcessor)
+add_subdirectory(VideoController)
+add_subdirectory(Applicaton)
 

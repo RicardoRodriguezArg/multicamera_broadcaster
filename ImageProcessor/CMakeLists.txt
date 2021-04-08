@@ -31,12 +31,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
 target_include_directories(${PROJECT_NAME}Lib
     PUBLIC 
         $<INSTALL_INTERFACE:include>#for interface
-        $<INSTALL_INTERFACE:include/image_processor>
+        $<INSTALL_INTERFACE:include/imageProcessor>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>#for building
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/image_processor
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 #this target will export the following dependencies

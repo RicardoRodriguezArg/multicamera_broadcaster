@@ -1,5 +1,18 @@
 project(VideoController)
 cmake_minimum_required(VERSION 3.5)
+option(BUILD_HAAR_DETECTOR "Build Haar Default CV Detector" OFF)
+option(BUILD_HAAR_DETECTOR_DEBUG "Build for debug with OpenCv Image viewer" OFF)
+
+if (BUILD_HAAR_DETECTOR)
+    add_definitions(-DIMAGE_PROCESSOR_HAAR_DEBUG=1)
+    add_definitions(-D0IMAGE_PROCESSOR_HAAR=0)
+endif()
+
+if (BUILD_HAAR_DETECTOR_DEBUG)
+    add_definitions(-DIMAGE_PROCESSOR_HAAR_DEBUG=0)
+    add_definitions(-D0IMAGE_PROCESSOR_HAAR=1)
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(SRCS ${PROJECT_NAME}_SRCS)
 file(GLOB SRCS "./src/*.cpp")
