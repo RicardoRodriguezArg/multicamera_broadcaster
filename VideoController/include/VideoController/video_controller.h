@@ -28,7 +28,7 @@ struct VideoControllerInfo {
   }
 
   bool start() {
-    const boool is_valid_init = init();
+    const bool is_valid_init = init();
     if (!is_valid_init) {
       return is_valid_init;
     }
@@ -65,14 +65,14 @@ struct VideoControllerInfo {
     if (!capture_device_.isOpened()) {
       return false;
     }
-    fps = capture_device_.get(cv::CAP_PROP_FPS);
+    fps_ = capture_device_.get(cv::CAP_PROP_FPS);
     return true;
   }
 
   double fps_{0.0};
   std::thread video_thread_;
   std::atomic<bool> is_working_{false};
-  cv::Frame capture_frame_{};
+  cv::Mat capture_frame_{};
   cv::VideoCapture capture_device_;  // capture the video from webcam
   const std::shared_ptr<ImageProcessor> image_processor_;
 };

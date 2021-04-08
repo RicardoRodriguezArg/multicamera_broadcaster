@@ -1,43 +1,15 @@
 #include <VideoController/video_controller.h>
+#include <ImageProcessor/image_processor_manager.h>
 #include <iostream>
 
-int main(int argc, char **argv) {
-  using namespace std;
-  using namespace cv;
-
-  VideoCapture cap(0); // capture the video from webcam
-
-  if (!cap.isOpened()) // if not success, exit program
-  {
-    cout << "Cannot open the web cam" << endl;
-    return -1;
-  } else {
-    std::cout << "Exito!" << std::endl;
-    double fps = cap.get(CAP_PROP_FPS);
-    std::cout << "Frames per seconds : " << fps << endl;
-    String window_name = "My First Video";
-    cv::Mat frame;
-    while (true) {
-
-      bool bSuccess = cap.read(frame); // read a new frame from video
-
-      // Breaking the while loop at the end of the video
-      if (bSuccess == false) {
-        cout << "Found the end of the video" << endl;
-        break;
-      }
-      // show the frame in the created window
-      imshow(window_name, frame);
-      frame.release();
-      // wait for for 10 ms until any key is pressed.
-      // If the 'Esc' key is pressed, break the while loop.
-      // If the any other key is pressed, continue the loop
-      // If any key is not pressed withing 10 ms, continue the loop
-      if (waitKey(10) == 27) {
-        cout << "Esc key is pressed by user. Stoppig the video" << endl;
-        break;
-      }
-    }
-  }
+int main() {
+  Multicamera::ImageProcessor::DetectorParamsBase face_params{1.3, 3};
+  Multicamera::ImageProcessor::DetectorParamsBase eye_params{1.5, 2};
+  Multicamera::ImageProcessor::ImageProcessorManager face_recognition{
+      "./resources/haarcascade_frontalface_alt.xml",
+      "./resources/haarcascade_eye_tree_eyeglasses.xml", face_params,
+      eye_params};
+      
+  //MultiCamera::VideoController<Multicamera::ImageProcessor::ImageProcessorManager> video_controller{};
   return 0;
 }

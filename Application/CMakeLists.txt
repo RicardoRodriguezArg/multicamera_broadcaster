@@ -26,17 +26,32 @@ find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 find_package(glog REQUIRED)
 find_package(gflags REQUIRED)
+include_directories(
+../VideoController/
+../VideoController/include
+../ImageProcessor/
+../ImageProcessor/include
+)
+#find_package(VideoController HINTS "${PROJECT_BINARY_DIR}/../VideoController/generated" REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SRCS} ${HDRS})
-add_executable(MCB::APPLICATION ALIAS ${PROJECT_NAME})
-#INCLUDE_DIR for our target
+
+
 target_include_directories(${PROJECT_NAME}
     PUBLIC 
-        $<INSTALL_INTERFACE:include>#for interface    
+        $<INSTALL_INTERFACE:include>#for interface
+        $<INSTALL_INTERFACE:include/Application>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>#for building
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Application
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
+
+
 
 # Link
 target_link_libraries( ${PROJECT_NAME} PUBLIC ${OpenCV_LIBS} glog::glog)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wpedantic -O3)
+
+

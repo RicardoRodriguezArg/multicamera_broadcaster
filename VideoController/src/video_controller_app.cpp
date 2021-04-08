@@ -1,7 +1,7 @@
 #include <VideoController/video_controller.h>
 #include <iostream>
 
-int main(int argc, char **argv) {
+int main() {
   using namespace std;
   using namespace cv;
 
