@@ -1,0 +1,2 @@
+## Compile Main Application
+cmake -DDEBUG_COMPILATION=ON -DBUILD_HAAR_DETECTOR_DEBUG=ON ..
