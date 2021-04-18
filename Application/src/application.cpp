@@ -6,13 +6,16 @@
 namespace {
 using ImageProcessorManager =
     Multicamera::ImageProcessor::ImageProcessorManager;
+// TODO: Use config XML file for this variables
 constexpr std::string_view HAAR_FACE_FILENAME{
-    "./resources/haarcascade_frontalface_alt.xml"};
+    "../resources/haarcascade_frontalface_alt.xml"};
 constexpr std::string_view HAAR_EYE_FILENAME{
-    "./resources/haarcascade_eye_tree_eyeglasses.xml"};
+    "../resources/haarcascade_eye_tree_eyeglasses.xml"};
 } // namespace
 
 int main() {
+  // TODO:Implement Moderm C++20 Factory/Builder Pattern to create this
+  // applications
   Multicamera::ImageProcessor::DetectorParamsBase face_params{1.3, 3};
   Multicamera::ImageProcessor::DetectorParamsBase eye_params{1.5, 2};
   std::cout << "Creating Image Processor" << std::endl;

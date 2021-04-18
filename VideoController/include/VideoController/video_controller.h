@@ -26,7 +26,7 @@ template <typename ImageProcessor> struct VideoManager {
   ~VideoManager() {
     stop();
     if (was_launched_) {
-      video_thread_.join();
+      // video_thread_.join();
     }
   }
 
@@ -37,8 +37,9 @@ template <typename ImageProcessor> struct VideoManager {
     if (!is_valid_init) {
       return is_valid_init;
     }
-    video_thread_ = std::thread(&VideoManager::start_thread, this);
-    was_launched_ = true;
+    // video_thread_ = std::thread(&VideoManager::start_thread, this);
+    start_thread();
+
     is_working_ = true;
     return was_launched_.load();
   }
@@ -48,21 +49,28 @@ template <typename ImageProcessor> struct VideoManager {
 private:
   void start_thread() {
     int retry_capture_attemp{0};
-    while (is_working_) {
-      capture_frame_.release();
+    while (true) {
+
       if (!capture_device_.read(capture_frame_)) {
+        std::cout << "Retrying\n";
         ++retry_capture_attemp;
         if (retry_capture_attemp > MAX_RETRY_ATTEMP) {
           is_working_ = false;
         }
       } else {
         retry_capture_attemp = 0;
-#if IMAGE_PROCESSOR_HAAR_DEBUG
+        std::cout << "Detecting\n";
         image_processor_->Detect(capture_frame_);
-        // show the frame in the created window
         cv::imshow("Default Haar CV DEBUG ", capture_frame_);
-#elif IMAGE_PROCESSOR_HAAR
-        image_processor_->Detect(capture_frame_);
+        capture_frame_.release();
+        if (cv::waitKey(10) == 27) {
+          std::cout << "Esc key is pressed by user. Stoppig the video\n";
+          break;
+        }
+#ifdef IMAGE_PROCESSOR_HAAR_DEBUG
+        // show the frame in the created window
+
+        // cv::imshow("Default Haar CV DEBUG ", capture_frame_);
 #endif
       }
     }
@@ -73,6 +81,7 @@ private:
       return false;
     }
     fps_ = capture_device_.get(cv::CAP_PROP_FPS);
+    std::cout << "FPS: " << std::to_string(fps_) << std::endl;
     return true;
   }
 

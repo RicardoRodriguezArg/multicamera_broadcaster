@@ -9,7 +9,12 @@ file(GLOB SRCS "./src/*.cpp")
 file(GLOB HDRS "./include/VideoController/*.h")
 #Clang Tidy checks
 set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
-#Add Dependencies
+option(BUILD_HAAR_DETECTOR_DEBUG "Build with Opencv Windows Visualizer" OFF)
+if (BUILD_HAAR_DETECTOR_DEBUG)
+    MESSAGE(STATUS "Video Controller Allowing Visualize OpenCv Video Frame")
+    add_definitions(-DIMAGE_PROCESSOR_HAAR_DEBUG=1)
+
+endif()
 #####################################
 
 find_package(OpenCV REQUIRED)
