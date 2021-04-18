@@ -11,7 +11,7 @@ int main() {
   {
     cout << "Cannot open the web cam" << endl;
     return -1;
-  } else {
+  } 
     std::cout << "Exito!" << std::endl;
     double fps = cap.get(CAP_PROP_FPS);
     std::cout << "Frames per seconds : " << fps << endl;
@@ -38,6 +38,6 @@ int main() {
         break;
       }
     }
-  }
+  
   return 0;
 }
