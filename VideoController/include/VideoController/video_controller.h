@@ -15,25 +15,25 @@ namespace VideoController {
 namespace {
 static constexpr int RASPI_WEB_CAM = 0;
 static constexpr int MAX_RETRY_ATTEMP = 100;
-}  // namespace
+} // namespace
 
-template <typename ImageProcessor>
-struct VideoManager {
+template <typename ImageProcessor> struct VideoManager {
   explicit VideoManager(
       std::unique_ptr<ImageProcessor> image_processor = nullptr)
-      : image_processor_(std::move(image_processor)), capture_device_(RASPI_WEB_CAM) {}
+      : image_processor_(std::move(image_processor)),
+        capture_device_(RASPI_WEB_CAM) {}
 
   ~VideoManager() {
     stop();
-    if(was_launched_)
-    {
-    video_thread_.join();
+    if (was_launched_) {
+      video_thread_.join();
     }
   }
 
   bool start() {
     const bool is_valid_init = init();
-    std::cout <<"Init Video From Raspy"<< std::boolalpha << is_valid_init<<std::endl;
+    std::cout << "Init Video From Raspy" << std::boolalpha << is_valid_init
+              << std::endl;
     if (!is_valid_init) {
       return is_valid_init;
     }
@@ -45,7 +45,7 @@ struct VideoManager {
 
   void stop() { is_working_ = false; }
 
- private:
+private:
   void start_thread() {
     int retry_capture_attemp{0};
     while (is_working_) {
@@ -82,8 +82,8 @@ struct VideoManager {
   std::atomic<bool> was_launched_{false};
   cv::Mat capture_frame_{};
   const std::unique_ptr<ImageProcessor> image_processor_;
-  cv::VideoCapture capture_device_;  // capture the video from webcam
+  cv::VideoCapture capture_device_; // capture the video from webcam
 };
-}  // namespace VideoController
-}  // namespace MultiCamera
+} // namespace VideoController
+} // namespace MultiCamera
 #endif

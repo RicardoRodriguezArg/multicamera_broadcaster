@@ -14,10 +14,9 @@ namespace VideoController {
 namespace {
 static constexpr int RASPI_WEB_CAM = 0;
 static constexpr int MAX_RETRY_ATTEMP = 100;
-}  // namespace
+} // namespace
 
-template <typename ImageProcessor>
-struct VideoControllerInfo {
+template <typename ImageProcessor> struct VideoControllerInfo {
   explicit VideoControllerInfo(
       const std::shared_ptr<ImageProcessor> &image_processor = nullptr)
       : image_processor_(image_processor), capture_device_(RASPI_WEB_CAM) {}
@@ -37,7 +36,7 @@ struct VideoControllerInfo {
 
   void stop() { is_working_ = false; }
 
- private:
+private:
   void start_thread() {
     int retry_capture_attemp{0};
     while (is_working_) {
@@ -73,9 +72,9 @@ struct VideoControllerInfo {
   std::thread video_thread_;
   std::atomic<bool> is_working_{false};
   cv::Frame capture_frame_{};
-  cv::VideoCapture capture_device_;  // capture the video from webcam
+  cv::VideoCapture capture_device_; // capture the video from webcam
   const std::shared_ptr<ImageProcessor> image_processor_;
 };
-}  // namespace VideoController
-}  // namespace MultiCamera
+} // namespace VideoController
+} // namespace MultiCamera
 #endif
